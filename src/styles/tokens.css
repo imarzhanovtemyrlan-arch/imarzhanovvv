@@ -1,0 +1,31 @@
+:root {
+  /* Color: deep graphite-blue ledger, not pure black; amber for profit,
+     garnet for negative/sell - deliberately not the default neon-green. */
+  --color-bg: #11141c;
+  --color-panel: #181c26;
+  --color-panel-raised: #1e2330;
+  --color-border: #262b38;
+  --color-text: #eae7e1;
+  --color-text-dim: #8a8fa3;
+  --color-text-faint: #565b6e;
+  --color-amber: #e3a34c;
+  --color-amber-dim: #7a5a2e;
+  --color-garnet: #c1544f;
+  --color-teal: #4c9a8e;
+  --color-focus: #e3a34c;
+
+  --font-ui: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  color-scheme: dark;
+}

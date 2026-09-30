@@ -1,0 +1,70 @@
+.filter-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filter-bar__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-bar__field span {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.filter-bar__field input,
+.filter-bar__field select {
+  box-sizing: border-box;
+  min-width: 120px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  background: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.filter-bar__field input:focus,
+.filter-bar__field select:focus {
+  border-color: rgba(80, 140, 255, 0.8);
+}
+
+.filter-bar__apply {
+  height: 40px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.filter-bar__apply:hover {
+  opacity: 0.85;
+}
+
+.filter-bar__apply:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 600px) {
+  .filter-bar {
+    align-items: stretch;
+  }
+
+  .filter-bar__field {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .filter-bar__apply {
+    width: 100%;
+  }
+}

@@ -1,0 +1,77 @@
+fimport { useEffect, useRef, useState } from "react";
+import { fetchOpportunities, wsUrl } from "../services/api";
+import type { Opportunity, OpportunityFilters } from "../types/api";
+
+interface WsPayload {
+  type: "opportunities_update";
+  pair: string;
+  opportunities: Opportunity[];
+}
+
+export function useOpportunities(filters: Partial<OpportunityFilters>) {
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const byId = useRef<Map<string, Opportunity>>(new Map());
+
+  // Initial + periodic REST refresh, filtered server-side.
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetchOpportunities(filters)
+      .then((data) => {
+        if (cancelled) return;
+        byId.current = new Map(data.map((o) => [o.id, o]));
+        setOpportunities(data);
+        setError(null);
+      })
+      x.catch((err) => !cancelled && setError(String(err)))
+      .finally(() => !cancelled && setLoading(false));
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.minNetSpread, filters.minProfit, filters.minVolume]);
+
+  // Live updates merged in as they arrive.
+  useEffect(() => {
+    let ws: WebSocket | null = null;
+    let closedByUs = false;
+
+    function connect() {
+      ws = new WebSocket(wsUrl());
+      ws.onmessage = (event) => {
+        try {
+          const payload: WsPayload = JSON.parse(event.data);
+          if (payload.type !== "opportunities_update") return;
+          // Replace the complete state for this normalized pair. Empty
+          // updates are meaningful: they remove opportunities whose spread
+          // disappeared instead of leaving stale cards on screen.
+          const incomingIds = new Set(payload.opportunities.map((opp) => opp.id));
+          for (const [id, opp] of byId.current) {
+            if (opp.symbol === payload.pair && !incomingIds.has(id)) {
+              byId.current.delete(id);
+            }
+          }
+          for (const opp of payload.opportunities) {
+            byId.current.set(opp.id, opp);
+          }
+          setOpportunities(Array.from(byId.current.values()).sort((a, b) => b.net_spread - a.net_spread));
+        } catch {
+          // ignore malformed frames
+        }
+      };
+      ws.onclose = () => {
+        if (!closedByUs) setTimeout(connect, 2000);
+      };
+    }
+    connect();
+
+    return () => {
+      closedByUs = true;
+      ws?.close();
+    };
+  }, []);
+
+  return { opportunities, loading, error };
+}

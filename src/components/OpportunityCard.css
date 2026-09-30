@@ -1,0 +1,128 @@
+.opp-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.opp-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.opp-card__symbol {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+.opp-card__age {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+}
+
+.opp-card__age--fresh {
+  color: var(--color-teal);
+}
+
+.opp-card__route {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.opp-card__leg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.opp-card__leg-label {
+  font-size: 0.68rem;
+  color: var(--color-text-faint);
+  letter-spacing: 0.06em;
+}
+
+.opp-card__leg-exchange {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.opp-card__leg-price {
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+}
+
+.opp-card__arrow {
+  color: var(--color-amber);
+  font-size: 1.1rem;
+}
+
+.opp-card__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.opp-card__metrics dt {
+  font-size: 0.68rem;
+  color: var(--color-text-faint);
+}
+
+.opp-card__metrics dd {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.opp-card__metric--net dd {
+  color: var(--color-amber);
+  font-weight: 600;
+}
+
+.opp-card__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-1);
+}
+
+.opp-card__volume,
+.opp-card__profit {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.opp-card__volume-label,
+.opp-card__profit-label {
+  font-size: 0.68rem;
+  color: var(--color-text-faint);
+}
+
+.opp-card__profit-value {
+  color: var(--color-amber);
+  font-weight: 600;
+}
+
+.opp-card__details {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.82rem;
+}
+
+.opp-card__details:active {
+  background: var(--color-panel-raised);
+}

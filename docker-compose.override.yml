@@ -1,0 +1,19 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    depends_on:
+      - backend
+      - frontend
+  frontend:
+    environment:
+      VITE_API_BASE_URL: https://arbwatch.duckdns.org
+
+volumes:
+  caddy_data:
